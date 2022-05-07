@@ -7,6 +7,12 @@
     <title>Создание комнаты</title>
 </head>
 <body>
-    <h1>Создание комнаты</h1>
+    {% block content %}
+        <h1>Создание комнаты</h1>
+        <form method="POST" class="create-room-form">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="">Создать</button>
+        </form>
+    {% endblock %}
 </body>
 </html>

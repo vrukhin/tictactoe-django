@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 
 from .models import Room
+from .forms import RoomForm
 
 
 def index(request):
@@ -25,5 +26,12 @@ def room_detail(request, room_id):
         )
 
 
-def create(request):
-    return render(request, 'tictac/create.html')
+def room_create(request):
+    if request.method == "POST":
+        form = RoomForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('rooms')
+    else:
+        form = RoomForm()
+    return render(request, 'tictac/create.html', {'form': form})
