@@ -16,8 +16,8 @@ def rooms_list(request):
         )
 
 
-def room_detail(request, id):
-    room = get_object_or_404(Room, id=id)
+def room_detail(request, room_id):
+    room = get_object_or_404(Room, id=room_id)
     return render(
         request,
         'tictac/room_detail.html',
