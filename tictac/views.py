@@ -1,14 +1,28 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
-from django.http import HttpResponse
+from .models import Room
 
 
 def index(request):
     return render(request, 'tictac/index.html')
 
 
-def rooms(request):
-    return render(request, 'tictac/rooms.html')
+def rooms_list(request):
+    rooms = Room.objects.all()
+    return render(
+        request,
+        'tictac/rooms.html',
+        {'rooms':rooms},
+        )
+
+
+def room_detail(request, id):
+    room = get_object_or_404(Room, id=id)
+    return render(
+        request,
+        'tictac/room_detail.html',
+        {'room':room},
+        )
 
 
 def create(request):
