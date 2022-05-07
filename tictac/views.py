@@ -30,8 +30,8 @@ def room_create(request):
     if request.method == "POST":
         form = RoomForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('rooms')
+            room = form.save()
+            return redirect('room_detail', room_id=room.id)
     else:
         form = RoomForm()
     return render(request, 'tictac/create.html', {'form': form})
