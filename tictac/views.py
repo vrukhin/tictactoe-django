@@ -4,4 +4,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Крестики-нолики онлайн")
+    return render(request, 'tictac/index.html')
