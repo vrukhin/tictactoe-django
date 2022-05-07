@@ -37,31 +37,45 @@
     {% endblock %}
     <div class="tictac-field">
         <div class="tictac-field-line">
+            <button id="cell-0" class="tictac-field-button" name="0" value="0">&nbsp;</button>
             <button id="cell-1" class="tictac-field-button" name="1" value="1">&nbsp;</button>
             <button id="cell-2" class="tictac-field-button" name="2" value="2">&nbsp;</button>
-            <button id="cell-3" class="tictac-field-button" name="3" value="3">&nbsp;</button>
         </div>
         <div class="tictac-field-line">
+            <button id="cell-3" class="tictac-field-button" name="3" value="3">&nbsp;</button>
             <button id="cell-4" class="tictac-field-button" name="4" value="4">&nbsp;</button>
             <button id="cell-5" class="tictac-field-button" name="5" value="5">&nbsp;</button>
-            <button id="cell-6" class="tictac-field-button" name="6" value="6">&nbsp;</button>
         </div>
         <div class="tictac-field-line">
+            <button id="cell-6" class="tictac-field-button" name="6" value="6">&nbsp;</button>
             <button id="cell-7" class="tictac-field-button" name="7" value="7">&nbsp;</button>
             <button id="cell-8" class="tictac-field-button" name="8" value="8">&nbsp;</button>
-            <button id="cell-9" class="tictac-field-button" name="9" value="9">&nbsp;</button>
         </div>
     </div>
 
     {{ room.pk|json_script:"room-id" }}
+    {{ room.room_state|json_script:"room-state" }}
 </body>
 <script>
     const cell_buttons = document.querySelectorAll('.tictac-field-button');
     const roomID = JSON.parse(document.getElementById('room-id').textContent);
+    const roomState = JSON.parse(document.getElementById('room-state').textContent);
+    const cells_disabled_states = {
+        '-': false,
+        'X': true,
+        'O': true,
+    }
+    const cells_values = {
+        '-': '\xa0',
+        'X': 'X',
+        'O': 'O',
+    }
     let player = 'X';
     let next_player = 'O';
 
     for (var i = 0; i < cell_buttons.length; i++)(function(i) {
+        cell_buttons[i].disabled = cells_disabled_states[roomState[i]];
+        cell_buttons[i].textContent = cells_values[roomState[i]]
         cell_buttons[i].onclick = function() {
             roomSocket.send(JSON.stringify({
                 'player': player,

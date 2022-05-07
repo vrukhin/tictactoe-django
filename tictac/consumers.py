@@ -1,5 +1,8 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.db import database_sync_to_async
+
+from tictac.models import Room
 
 
 class RoomConsumer(AsyncWebsocketConsumer):
@@ -28,6 +31,8 @@ class RoomConsumer(AsyncWebsocketConsumer):
         player = text_data_json['player']
         cell = text_data_json['cell']
 
+        await self.make_move(cell, player)
+
         await self.channel_layer.group_send(
             self.room_group_id,
             {
@@ -45,3 +50,13 @@ class RoomConsumer(AsyncWebsocketConsumer):
             'player': player,
             'cell': cell,
         }))
+
+    
+    @database_sync_to_async
+    def make_move(self, cell, player):
+        id = int(cell.split('-')[1])
+        r = Room.objects.get(pk=self.room_id)
+        room_state = r.room_state
+        room_state_new = room_state[:id] + player + room_state[id+1:]
+        r.room_state = room_state_new
+        r.save()
