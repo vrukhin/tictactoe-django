@@ -1,3 +1,5 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'tictac/style.css' %}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,11 +10,14 @@
 </head>
 <body>
     {% block content %}
+    <div class="main">
         <h1>Создание комнаты</h1>
         <form method="POST" class="create-room-form">{% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="">Создать</button>
+            <button type="submit" class="btn btn-primary">Создать</button>
         </form>
+        <a href="../" class="btn btn-outline-primary">Назад</a>
+    </div>
     {% endblock %}
 </body>
 </html>

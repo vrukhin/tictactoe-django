@@ -1,3 +1,5 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'tictac/style.css' %}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,10 +11,24 @@
 <body>
     <h1>Список комнат</h1>
     {% block content %}
+    <div class="room-cards">
         {% for room in rooms %}
-            <h2>{{ room.room_name }}</h2>
-            <span>{{ room.room_description }}</span>
+            <div class="room-card">
+                <div class="room-card-img">
+                    <a href="./rooms/{{ room.id }}"><img src="{% static 'tictac/tictac.png' %}" alt="Крестики-нолики"></a>
+                </div>
+                <div class="room-card-name">
+                    <h2><a class="room-link" href="./rooms/{{ room.id }}">{{ room.room_name }}</a></h2>
+                </div>
+                <div class="room-card-descr">
+                    <span>{{ room.room_description }}</span>
+                </div>
+            </div>
         {% endfor %}
+        <div class="room-card room-card-return">
+            <a href="../tictac/"><span class="material-symbols-outlined room-card-return-icon">undo</span></a>
+        </div>
+    </div>
     {% endblock %}
 </body>
 </html>

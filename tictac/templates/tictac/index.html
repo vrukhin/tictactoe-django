@@ -1,3 +1,5 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'tictac/style.css' %}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +9,11 @@
     <title>Крестики-нолики</title>
 </head>
 <body>
-    <h1>Крестики-нолики</h1>
-    <a href="./rooms/create"><button id="room-create">Создать комнату</button></a>
-    <a href="./rooms"><button id="room-list">Найти комнату</button></a>
+    <div class="main">
+        <h1>Крестики-нолики</h1>
+        <img class="game-logo" src="{% static 'tictac/tictac.png' %}" alt="Крестики-нолики">
+        <a href="./rooms/create" id="room-create" class="btn btn-primary">Создать комнату</a>
+        <a href="./rooms" id="room-list" class="btn btn-outline-primary">Найти комнату</a>
+    </div>
 </body>
 </html>

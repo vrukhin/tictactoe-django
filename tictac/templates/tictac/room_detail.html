@@ -1,3 +1,5 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'tictac/style.css' %}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,51 +7,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Комната {{ room.room_name }}</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        
-        h1 {
-            padding: 10px;
-        }
-        
-        .tictac-field {
-            padding: 10px;
-            width: 100%;
-        }
-        
-        .tictac-field-line {
-            padding: 2px;
-        }
-        
-        .tictac-field-button {
-            width: 100px;
-            height: 100px;
-        }
-    </style>
 </head>
 <body>
-    {% block content %}
+    <div class="main">
         <h1>{{ room.room_name }}</h1>
-        <span>{{ room.room_description }}</span>
-    {% endblock %}
-    <div class="tictac-field">
-        <div class="tictac-field-line">
-            <button id="cell-0" class="tictac-field-button" name="0" value="0">&nbsp;</button>
-            <button id="cell-1" class="tictac-field-button" name="1" value="1">&nbsp;</button>
-            <button id="cell-2" class="tictac-field-button" name="2" value="2">&nbsp;</button>
+        <div class="tictac-field">
+            <div class="tictac-field-line">
+                <button id="cell-0" class="tictac-field-button" name="0" value="0">&nbsp;</button>
+                <button id="cell-1" class="tictac-field-button" name="1" value="1">&nbsp;</button>
+                <button id="cell-2" class="tictac-field-button" name="2" value="2">&nbsp;</button>
+            </div>
+            <div class="tictac-field-line">
+                <button id="cell-3" class="tictac-field-button" name="3" value="3">&nbsp;</button>
+                <button id="cell-4" class="tictac-field-button" name="4" value="4">&nbsp;</button>
+                <button id="cell-5" class="tictac-field-button" name="5" value="5">&nbsp;</button>
+            </div>
+            <div class="tictac-field-line">
+                <button id="cell-6" class="tictac-field-button" name="6" value="6">&nbsp;</button>
+                <button id="cell-7" class="tictac-field-button" name="7" value="7">&nbsp;</button>
+                <button id="cell-8" class="tictac-field-button" name="8" value="8">&nbsp;</button>
+            </div>
         </div>
-        <div class="tictac-field-line">
-            <button id="cell-3" class="tictac-field-button" name="3" value="3">&nbsp;</button>
-            <button id="cell-4" class="tictac-field-button" name="4" value="4">&nbsp;</button>
-            <button id="cell-5" class="tictac-field-button" name="5" value="5">&nbsp;</button>
-        </div>
-        <div class="tictac-field-line">
-            <button id="cell-6" class="tictac-field-button" name="6" value="6">&nbsp;</button>
-            <button id="cell-7" class="tictac-field-button" name="7" value="7">&nbsp;</button>
-            <button id="cell-8" class="tictac-field-button" name="8" value="8">&nbsp;</button>
+        <div class="tictac-room-descr">
+            <span>{{ room.room_description }}</span>
         </div>
     </div>
 
