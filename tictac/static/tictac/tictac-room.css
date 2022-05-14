@@ -1,0 +1,25 @@
+.tictac-field {
+    padding: 6px;
+}
+
+.tictac-field-line {
+    padding: 2px;
+}
+
+.tictac-field-button {
+    background-color: #ffffff;
+    border: #333333 1px solid;
+    border-radius: 4px;
+    box-shadow: none;
+    font-size: large;
+    width: 100px;
+    height: 100px;
+}
+
+.tictac-field-button:hover {
+    background-color: #f2f2f2;
+}
+
+.tictac-room-descr {
+    margin-top: 16px;
+}
