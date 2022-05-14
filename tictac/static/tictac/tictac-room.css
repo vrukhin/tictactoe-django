@@ -23,3 +23,7 @@
 .tictac-room-descr {
     margin-top: 16px;
 }
+
+#restart-game-btn {
+    visibility: hidden;
+}
