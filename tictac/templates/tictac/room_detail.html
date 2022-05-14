@@ -36,48 +36,5 @@
     {{ room.pk|json_script:"room-id" }}
     {{ room.room_state|json_script:"room-state" }}
 </body>
-<script>
-    const cell_buttons = document.querySelectorAll('.tictac-field-button');
-    const roomID = JSON.parse(document.getElementById('room-id').textContent);
-    const roomState = JSON.parse(document.getElementById('room-state').textContent);
-    const cells_disabled_states = {
-        '-': false,
-        'X': true,
-        'O': true,
-    }
-    const cells_values = {
-        '-': '\xa0',
-        'X': 'X',
-        'O': 'O',
-    }
-    let player = 'X';
-    let next_player = 'O';
-
-    for (var i = 0; i < cell_buttons.length; i++)(function(i) {
-        cell_buttons[i].disabled = cells_disabled_states[roomState[i]];
-        cell_buttons[i].textContent = cells_values[roomState[i]]
-        cell_buttons[i].onclick = function() {
-            roomSocket.send(JSON.stringify({
-                'player': player,
-                'cell': this.id,
-            }));
-        }
-    })(i);
-
-    const roomSocket = new WebSocket(
-        'ws://' +
-        window.location.host +
-        '/ws/tictac/rooms/' +
-        roomID +
-        '/'
-    )
-
-    roomSocket.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        btn = document.querySelector('#' + data.cell);
-        btn.textContent = data.player;
-        btn.disabled = true;
-        [player, next_player] = [next_player, player];
-    }
-</script>
+<script src="{% static 'tictac/tictac.js' %}"></script> 
 </html>

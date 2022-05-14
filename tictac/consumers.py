@@ -31,7 +31,7 @@ class RoomConsumer(AsyncWebsocketConsumer):
         player = text_data_json['player']
         cell = text_data_json['cell']
 
-        await self.make_move(cell, player)
+        state = await self.make_move(cell, player)
 
         await self.channel_layer.group_send(
             self.room_group_id,
@@ -39,6 +39,7 @@ class RoomConsumer(AsyncWebsocketConsumer):
                 'type': 'room_message',
                 'player': player,
                 'cell': cell,
+                'state': state,
             }
         )
 
@@ -46,9 +47,11 @@ class RoomConsumer(AsyncWebsocketConsumer):
     async def room_message(self, event):
         player = event['player']
         cell = event['cell']
+        state = event['state']
         await self.send(text_data=json.dumps({
             'player': player,
             'cell': cell,
+            'state': state,
         }))
 
     
@@ -60,3 +63,4 @@ class RoomConsumer(AsyncWebsocketConsumer):
         room_state_new = room_state[:id] + player + room_state[id+1:]
         r.room_state = room_state_new
         r.save()
+        return r.room_state
