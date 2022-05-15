@@ -57,10 +57,13 @@ class RoomConsumer(AsyncWebsocketConsumer):
     
     @database_sync_to_async
     def make_move(self, cell, player):
-        id = int(cell.split('-')[1])
         r = Room.objects.get(pk=self.room_id)
-        room_state = r.room_state
-        room_state_new = room_state[:id] + player + room_state[id+1:]
-        r.room_state = room_state_new
+        if cell == '':
+            r.room_state = '---------'
+        else:
+            id = int(cell.split('-')[1])
+            room_state = r.room_state
+            room_state_new = room_state[:id] + player + room_state[id+1:]
+            r.room_state = room_state_new
         r.save()
         return r.room_state

@@ -1,4 +1,5 @@
 const cell_buttons = document.querySelectorAll('.tictac-field-button');
+const new_game_btn = document.getElementById('restart-game-btn');
 const roomID = JSON.parse(document.getElementById('room-id').textContent);
 let roomState = JSON.parse(document.getElementById('room-state').textContent);
 const cells_disabled_states = {
@@ -58,15 +59,27 @@ const roomSocket = new WebSocket(
 
 roomSocket.onmessage = function(e) {
     const data = JSON.parse(e.data);
-    btn = document.querySelector('#' + data.cell);
-    btn.textContent = data.player;
-    btn.disabled = true;
-    [player, next_player] = [next_player, player];
-    winner = checkWinner(data.state, winnerLines);
-    if (winner) {
-        alert(winners[winner] + ' выиграли!');
-        for (var i = 0; i < cell_buttons.length; i++)(function(i) {
-            cell_buttons[i].disabled = true;
-        })(i);
+    if (data.cell) {
+        btn = document.querySelector('#' + data.cell);
+        btn.textContent = data.player;
+        btn.disabled = true;
+        [player, next_player] = [next_player, player];
+        winner = checkWinner(data.state, winnerLines);
+        if (winner) {
+            alert(winners[winner] + ' выиграли!');
+            for (var i = 0; i < cell_buttons.length; i++)(function(i) {
+                cell_buttons[i].disabled = true;
+            })(i);
+            new_game_btn.style.visibility = 'visible';
+        }
+    } else {
+        window.location.reload();
     }
+}
+
+new_game_btn.onclick = function() {
+    roomSocket.send(JSON.stringify({
+        'player': player,
+        'cell': '',
+    }));
 }
